@@ -1,2 +1,2 @@
 #boutique-nouf
-    Boutique Nouf - Press On Nails Store
+Boutique Nouf - Press On Nails Store
