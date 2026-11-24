@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>إتمام الطلب | بوتيك نوف</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+background:#fffafb;
+color:#30252a;
+font-family:'IBM Plex Sans Arabic',sans-serif;
+}
+
+header{
+background:white;
+padding:20px 6%;
+border-bottom:1px solid #f0e2e6;
+display:flex;
+justify-content:space-between;
+}
+
+.logo{
+font:600 27px 'Playfair Display';
+color:#9d6472;
+}
+
+a{color:#9d6472;text-decoration:none}
+
+.box{
+max-width:600px;
+margin:45px auto;
+padding:20px;
+}
+
+h1{
+text-align:center;
+font:600 36px 'Playfair Display';
+}
+
+.panel{
+background:white;
+border:1px solid #f0e2e6;
+border-radius:18px;
+padding:22px;
+margin-bottom:18px;
+}
+
+.items{
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+}
+
+.pill{
+background:#f8e9ed;
+padding:8px 13px;
+border-radius:25px;
+}
+
+.total{
+display:flex;
+justify-content:space-between;
+font-weight:bold;
+margin-top:20px;
+border-top:1px solid #f0e2e6;
+padding-top:15px;
+}
+
+.field{margin-bottom:17px}
+
+label{
+display:block;
+margin-bottom:8px;
+font-size:14px;
+}
+
+input,textarea{
+width:100%;
+padding:14px;
+border:1px solid #ead9de;
+border-radius:10px;
+font:14px 'IBM Plex Sans Arabic';
+background:#fffafb;
+}
+
+textarea{
+min-height:100px;
+}
+
+.submit{
+width:100%;
+border:0;
+border-radius:30px;
+background:#c98291;
+color:white;
+padding:15px;
+font:600 15px 'IBM Plex Sans Arabic';
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">Boutique Nouf</div>
+<a href="index.html">العودة للمتجر ←</a>
+</header>
+
+<main class="box">
+
+<h1>Checkout</h1>
+
+<section class="panel">
+
+<h3>ملخص طلبك</h3>
+
+<div class="items" id="items"></div>
+
+<div class="total">
+<span>الإجمالي</span>
+<span id="total">0 ريال</span>
+</div>
+
+</section>
+
+<form class="panel" id="orderForm">
+
+<h3>بيانات العميل</h3>
+
+<div class="field">
+<label>رقم الجوال</label>
+<input
+type="tel"
+id="phone"
+placeholder="05xxxxxxxx"
+required>
+</div>
+
+<div class="field">
+<label>الموقع والعنوان</label>
+<textarea
+id="location"
+placeholder="المدينة والحي والعنوان"
+required></textarea>
+</div>
+
+<button class="submit" type="submit">
+إرسال الطلب
+</button>
+
+</form>
+
+</main>
+
+<script>
+
+const cart=JSON.parse(
+localStorage.getItem("boutiquenouf_cart")||"[]"
+);
+
+document.getElementById("items").innerHTML=
+cart.length
+? cart.map(x=>`<span class="pill">${x}</span>`).join("")
+: "السلة فارغة";
+
+document.getElementById("total").textContent=
+(cart.length*89)+" ريال";
+
+document.getElementById("orderForm").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+if(!cart.length){
+alert("السلة فارغة");
+return;
+}
+
+const phone=document.getElementById("phone").value;
+const location=document.getElementById("location").value;
+
+const message=
+`طلب جديد من بوتيك نوف
+التصاميم: ${cart.join(", ")}
+العدد: ${cart.length}
+الإجمالي: ${cart.length*89} ريال
+الجوال: ${phone}
+الموقع: ${location}`;
+
+const whatsapp="966000000000";
+
+window.open(
+"https://wa.me/"+whatsapp+"?text="+encodeURIComponent(message),
+"_blank"
+);
+
+});
+
+</script>
+
+</body>
+</html>
