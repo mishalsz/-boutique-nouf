@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>بوتيك نوف | Boutique Nouf</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fffafb;color:#30252a;font-family:Arial,sans-serif}
+header{padding:22px;display:flex;justify-content:space-between;align-items:center;background:white}
+.logo{font-size:25px;color:#b47787;font-weight:bold}
+button{cursor:pointer}
+.cart{background:#30252a;color:white;border:0;padding:12px 18px;border-radius:25px}
+.hero{text-align:center;padding:65px 15px;background:#f8e9ed}
+.hero h1{font-family:Georgia,serif;font-size:43px;direction:ltr;color:#9d6472}
+.hero p{color:#806f75}
+.cta{background:#c98291;color:white;padding:12px 25px;border-radius:25px;text-decoration:none;display:inline-block}
+.wrap{max-width:1000px;margin:auto;padding:30px 18px}
+.section{margin-bottom:45px}
+.heading{display:flex;justify-content:space-between;align-items:center}
+.heading h2{font-family:Georgia,serif;direction:ltr}
+.heading span{color:#a96678}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
+.card{background:white;border:1px solid #f0e2e6;border-radius:15px;overflow:hidden}
+.card img{width:100%;height:190px;object-fit:cover;background:#f7e5e9}
+.info{padding:13px}
+.info button{width:100%;padding:11px;border:1px solid #c98291;background:#fff7f9;color:#995f70;border-radius:25px}
+.price{color:#a96678;font-weight:bold}
+footer{text-align:center;padding:25px;color:#806f75}
+</style>
+</head>
+<body>
+
+<header>
+<div class="logo">Boutique Nouf<br><small>بوتيك نوف</small></div>
+<button class="cart" onclick="location.href='checkout.html'">
+السلة (<span id="count">0</span>)
+</button>
+</header>
+
+<section class="hero">
+<h1>Boutique Nouf</h1>
+<p>اختاري إطلالتك، واتركي التفاصيل علينا.</p>
+<a class="cta" href="#A">اكتشفي المجموعة</a>
+</section>
+
+<main class="wrap">
+
+<div class="section" id="A">
+<div class="heading">
+<h2>Section A</h2>
+<span>89 ريال</span>
+</div>
+<div class="grid" id="gridA"></div>
+</div>
+
+<div class="section" id="B">
+<div class="heading">
+<h2>Section B</h2>
+<span>89 ريال</span>
+</div>
+<div class="grid" id="gridB"></div>
+</div>
+
+</main>
+
+<footer>Boutique Nouf © 2026</footer>
+
+<script>
+let cart=JSON.parse(localStorage.getItem('noufCart')||'[]');
+
+function save(){
+localStorage.setItem('noufCart',JSON.stringify(cart));
+document.getElementById('count').textContent=cart.length;
+}
+
+function createProducts(section){
+let html='';
+for(let i=1;i<=6;i++){
+let id=section+i;
+html+=`
+<div class="card">
+<img src="nails-reference.jpeg" alt="Nail Design">
+<div class="info">
+<strong>${id}</strong>
+<p class="price">89 ريال</p>
+<button onclick="add('${id}')">
+${cart.includes(id)?'تمت الإضافة ✓':'أضيفي للسلة'}
+</button>
+</div>
+</div>`;
+}
+document.getElementById('grid'+section).innerHTML=html;
+}
+
+function add(id){
+if(cart.includes(id)){
+cart=cart.filter(x=>x!==id);
+}else{
+cart.push(id);
+}
+save();
+createProducts('A');
+createProducts('B');
+}
+
+createProducts('A');
+createProducts('B');
+save();
+</script>
+</body>
+</html>
